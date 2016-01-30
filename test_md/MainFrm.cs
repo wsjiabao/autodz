@@ -108,10 +108,9 @@ namespace MdTZ
         public static void gpTransHander(object sender, EventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString() + "[gpTransHander]" );
-            TranApi.do_tran_process();                   
-        }
-
-        
+            List<GuoPiao> gps = (List<GuoPiao>)sender;
+            TranApi.do_tran_process(gps);                   
+        }        
 
         #endregion
 
@@ -463,14 +462,27 @@ namespace MdTZ
         #region 定时器
         private void gp_trans_Time_Tick(object sender, EventArgs e)
         {
+            List<GuoPiao> gps = null;
+            try
+            {
+                gps = SinaAPI.getGPList(TranApi.tickCodes);
+            }
+            catch (Exception ee)
+            {
+                output(ee.Message);      
+            }
+          
             //开始交易
-            output("###开始交易##");
+            if (gps != null)
+            {
+                output("###开始交易##,gps.size:" + gps.Count);
+            }           
             output("趋势值:" + QuShi.qsz);
             if (GPUtil.isTranTime() && !TranApi.isTraning)
             {
                 //交易事件触发
                 EventHandler<EventArgs> tranEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_TRANS];
-                tranEvent.BeginInvoke(null, EventArgs.Empty, null, null);
+                tranEvent.BeginInvoke(gps, EventArgs.Empty, null, null);
                  
             }
             output("###结束交易##");      

@@ -18,6 +18,7 @@ namespace MdTZ
 
         public static List<string> buyCodes = new List<string>();     
         public static List<string> sellCodes = new List<string>();
+        public static string tickCodes = "sh000001,";
 
         public static List<GpTranBean> buyedCodes = new List<GpTranBean>();
         public static List<GpTranBean> selledCodes = new List<GpTranBean>();
@@ -137,6 +138,7 @@ namespace MdTZ
             foreach (DataRow r in codes.Rows)
             {
                 code = r["code"].ToString();
+                tickCodes += code + ",";
                 TranApi.buyCodes.Add(code);               
             }
 
@@ -152,6 +154,7 @@ namespace MdTZ
             foreach (DataRow r in codes.Rows)
             {
                 code = r["code"].ToString();
+                tickCodes += code + ",";
                 TranApi.sellCodes.Add(code);
             }
 
@@ -180,7 +183,7 @@ namespace MdTZ
         /// 交易开始
         /// </summary>
         /// <returns></returns>
-        public static int do_tran_process()
+        public static int do_tran_process(List<GuoPiao> gps)
         {
 
             isTraning = true;
