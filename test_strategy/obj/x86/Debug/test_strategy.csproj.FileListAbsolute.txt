@@ -1,6 +1,0 @@
-D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy\bin\Debug\test_strategy.exe
-D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy\bin\Debug\test_strategy.pdb
-D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy\bin\Debug\libgmnet.dll
-D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy\obj\x86\Debug\test_strategy.csprojResolveAssemblyReference.cache
-D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy\obj\x86\Debug\test_strategy.exe
-D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy\obj\x86\Debug\test_strategy.pdb
