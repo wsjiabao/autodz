@@ -150,7 +150,9 @@ namespace MdTZ
 
             //更新到买入队列
             TranApi.add_buys_codes();
-            TranApi.add_sells_codes();            
+            TranApi.add_sells_codes();
+            //海龟指标
+            HGStaUtil.hgDics = HGStaUtil.getHgZbList(TranApi.tickSqlCodes);
                                                         
         }
 
@@ -510,6 +512,11 @@ namespace MdTZ
             {
                 HisDataAPI.saveTodayHisDataFromSina();  
             }
+
+            output("###初始化下外汇开始##");
+            //初始化下外汇          
+            HisDataAPI.refreshRMB();
+            output("###结束初始化下外汇 ##");       
                                
             //output("###刷新要闻信息##");
             //EventHandler<EventArgs> gpEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_REFSH_YW];
@@ -533,22 +540,10 @@ namespace MdTZ
 
         private void gp_sel_timer_Tick(object sender, EventArgs e)
         {
+            HGStaUtil.hgDics = HGStaUtil.getHgZbList(TranApi.tickSqlCodes);
+            
 
-            //开始交易
-            //output("###刷新交易开始##");
-            //if (GPUtil.isTranTime() && !TranApi.isTraning)
-            //{
-            //    //方法测试
-            //   ZXApi.refreshWin();
-
-            //}
-            //output("###结束刷新交易##");  
-
-            output("###初始化下外汇开始##");
-            //初始化下外汇          
-            HisDataAPI.refreshRMB();
-
-            output("###结束初始化下外汇 ##");                                                   
+                                                      
           
         }
 

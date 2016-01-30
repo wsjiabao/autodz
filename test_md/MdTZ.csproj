@@ -98,11 +98,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\BaiduApi.cs" />
-    <Compile Include="api\EventMng.cs" />
     <Compile Include="api\GpSelectUtl.cs" />
     <Compile Include="api\GpStatcs.cs" />
     <Compile Include="api\GPTotalAPI.cs" />
     <Compile Include="api\GPUtil.cs" />
+    <Compile Include="api\HgZb.cs" />
     <Compile Include="api\HisDataAPI.cs" />
     <Compile Include="api\HtmlUtl.cs" />
     <Compile Include="api\JsonApi.cs" />
