@@ -62,6 +62,8 @@ namespace MdTZ
         public double ltsz { get; set; }
         public double syl { get; set; }
 
+        public double  tr { get; set; }
+
        public double  real_zf { get; set; }//涨幅
          
 

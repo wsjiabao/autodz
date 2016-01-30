@@ -365,7 +365,7 @@ namespace MdTZ
             {
                 sql.Clear();
 
-                sql.Append("insert into gptoday(code,dqj,zrspj,jrzgj,jrzdj,cj_num,cj_amt,zf,date,zhengf,jj) values ('")
+                sql.Append("insert into gptoday(code,dqj,zrspj,jrzgj,jrzdj,cj_num,cj_amt,zf,date,zhengf,jj,tr) values ('")
                 .Append(gp.code).Append("',")
                 .Append(gp.dqj).Append(",")
                 .Append(gp.zrspj).Append(",")
@@ -376,7 +376,7 @@ namespace MdTZ
                 .Append(gp.zf).Append(",'")
                 .Append(gp.date).Append("',")
                 .Append(gp.zhengf)
-                .Append(",").Append(gp.jj).Append(");");
+                .Append(",").Append(gp.jj).Append(",").Append(gp.tr).Append(");");
 
                 sqlList.Add(sql.ToString());
                 

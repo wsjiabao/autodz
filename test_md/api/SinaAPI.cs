@@ -312,6 +312,31 @@ namespace MdTZ
                 double real_zf = GPUtil.getRealGpZf(gp);
                 gp.real_zf = real_zf;
 
+                //tr 计算
+                if (((gp.jrzgj - gp.jrzdj) - Math.Abs(gp.zrspj - gp.jrzgj) > 0) 
+                    )
+                {
+                    if ((gp.jrzgj - gp.jrzdj) > Math.Abs(gp.zrspj - gp.jrzdj))
+                    {
+                        gp.tr = gp.jrzgj - gp.jrzdj;
+                    }
+                    else
+                    {
+                        gp.tr = Math.Abs(gp.zrspj - gp.jrzdj);
+                    }
+                }
+                else
+                {
+                    if (Math.Abs(gp.zrspj - gp.jrzgj) > Math.Abs(gp.zrspj - gp.jrzdj))
+                    {
+                        gp.tr = Math.Abs(gp.zrspj - gp.jrzgj);
+                    }
+                    else
+                    {
+                        gp.tr = Math.Abs(gp.zrspj - gp.jrzdj);
+                    }
+                }
+
                 gpList.Add(gp);
             }
 

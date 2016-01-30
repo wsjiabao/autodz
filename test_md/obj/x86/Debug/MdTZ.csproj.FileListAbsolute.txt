@@ -18,3 +18,16 @@ D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_m
 D:\github\autodz\test_md\bin\Debug\MdTZ.exe.config
 D:\github\autodz\test_md\obj\x86\Debug\MdTZ.exe
 D:\github\autodz\test_md\obj\x86\Debug\MdTZ.pdb
+D:\github\autodz\test_md\bin\Debug\MdTZ.exe.manifest
+D:\github\autodz\test_md\bin\Debug\MdTZ.application
+D:\github\autodz\test_md\bin\Debug\MdTZ.exe
+D:\github\autodz\test_md\bin\Debug\MdTZ.pdb
+D:\github\autodz\test_md\bin\Debug\AutoMapper.dll
+D:\github\autodz\test_md\bin\Debug\MySql.Data.dll
+D:\github\autodz\test_md\bin\Debug\AutoMapper.xml
+D:\github\autodz\test_md\obj\x86\Debug\MdTZ.csprojResolveAssemblyReference.cache
+D:\github\autodz\test_md\obj\x86\Debug\MdTZ.Form4.resources
+D:\github\autodz\test_md\obj\x86\Debug\MdTZ.MainFrm.resources
+D:\github\autodz\test_md\obj\x86\Debug\MdTZ.csproj.GenerateResource.Cache
+D:\github\autodz\test_md\obj\x86\Debug\MdTZ.exe.manifest
+D:\github\autodz\test_md\obj\x86\Debug\MdTZ.application

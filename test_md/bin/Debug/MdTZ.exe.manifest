@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MdTZ.exe" size="214528">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MdTZ.exe" size="215040">
       <assemblyIdentity name="MdTZ" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>prLWPyv9Tonhh/WapnBBnBYBeOI=</dsig:DigestValue>
+        <dsig:DigestValue>n2rR3ygohM5EskvqjUDkx1Om1Ew=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
