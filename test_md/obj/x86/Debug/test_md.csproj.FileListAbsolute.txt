@@ -1,0 +1,13 @@
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\test_libgmnet.exe.manifest
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\test_libgmnet.application
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\test_libgmnet.exe
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\test_libgmnet.pdb
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\libgmnet.dll
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\obj\x86\Debug\test_md.csprojResolveAssemblyReference.cache
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\obj\x86\Debug\test_libgmnet.exe.manifest
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\obj\x86\Debug\test_libgmnet.application
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\obj\x86\Debug\test_libgmnet.exe
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\obj\x86\Debug\test_libgmnet.pdb
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\AutoMapper.dll
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\MySql.Data.dll
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_md\bin\Debug\AutoMapper.xml

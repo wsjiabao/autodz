@@ -1,0 +1,6 @@
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_td\bin\Debug\test_td.exe
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_td\bin\Debug\test_td.pdb
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_td\bin\Debug\libgmnet.dll
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_td\obj\x86\Debug\test_td.csprojResolveAssemblyReference.cache
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_td\obj\x86\Debug\test_td.exe
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_td\obj\x86\Debug\test_td.pdb

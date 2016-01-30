@@ -1,0 +1,7 @@
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\bin\x86\Debug\test_strategy_backtest.exe.config
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\bin\x86\Debug\test_strategy_backtest.exe
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\bin\x86\Debug\test_strategy_backtest.pdb
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\bin\x86\Debug\libgmnet.dll
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\obj\x86\Debug\test_strategy_backtest.csprojResolveAssemblyReference.cache
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\obj\x86\Debug\test_strategy_backtest.exe
+D:\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\examples\test_strategy_backtest\obj\x86\Debug\test_strategy_backtest.pdb
