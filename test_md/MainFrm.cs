@@ -36,6 +36,10 @@ namespace MdTZ
 
 
         private static string dpCodes = "s_sh000001,s_sz399001,s_sz399006";
+
+        //交易次数
+        private static int tran_cnt = 0;
+        private static List<GuoPiao> tran_gps = null;
              
                      
         private void buyIn_Click(object sender, EventArgs e)
@@ -68,13 +72,8 @@ namespace MdTZ
 
         private void start_Click(object sender, EventArgs e)
         {
-
             get_filter_timer.Enabled = true;
-            get_filter_timer.Start();
-
-            gp_sel_timer.Enabled = true;
-            gp_sel_timer.Start();
-                              
+            get_filter_timer.Start();                                       
         }       
 
         #region 事件处理方法
@@ -105,12 +104,20 @@ namespace MdTZ
         }
 
         //强势个股列表
-        public static void gpTransHander(object sender, EventArgs e)
+        public static void gpBuysTransHander(object sender, EventArgs e)
         {
-            Console.WriteLine(DateTime.Now.ToString() + "[gpTransHander]" );
+            Console.WriteLine(DateTime.Now.ToString() + "[gpBuysTransHander]");
             List<GuoPiao> gps = (List<GuoPiao>)sender;
-            TranApi.do_tran_process(gps);                   
-        }        
+            TranApi.do_buy_process(StaUtil.getTransBean(gps,"dp"), StaUtil.getTransBean(gps,"buy"));                  
+        }
+
+        //强势个股列表
+        public static void gpSellsTransHander(object sender, EventArgs e)
+        {
+            Console.WriteLine(DateTime.Now.ToString() + "[gpSellTransHander]");
+            List<GuoPiao> gps = (List<GuoPiao>)sender;
+            TranApi.do_sell_process(StaUtil.getTransBean(gps, "dp"), StaUtil.getTransBean(gps, "sell"));  
+        }    
 
         #endregion
 
@@ -132,7 +139,8 @@ namespace MdTZ
 
             //将Method1和Method2注册到事件中
             gpOnEvent += new EventHandler<EventArgs>(getYwNewHander);
-            gpOnEvent += new EventHandler<EventArgs>(gpTransHander);
+            gpOnEvent += new EventHandler<EventArgs>(gpBuysTransHander);
+            gpOnEvent += new EventHandler<EventArgs>(gpSellsTransHander);
             gpDelegates = gpOnEvent.GetInvocationList();
 
             output("初始化数据开始..");
@@ -150,19 +158,14 @@ namespace MdTZ
 
             //更新到买入队列
             TranApi.add_buys_codes();
-            TranApi.add_sells_codes();
-            //海龟指标
-            HGStaUtil.hgDics = HGStaUtil.getHgZbList(TranApi.tickSqlCodes);
+            TranApi.add_sells_codes();          
                                                         
         }
 
         private void stop_Click(object sender, EventArgs e)
         {
             get_filter_timer.Enabled = false;
-            get_filter_timer.Stop();
-
-            gp_sel_timer.Enabled = false;
-            gp_sel_timer.Stop();
+            get_filter_timer.Stop();         
            
         }
 
@@ -187,7 +190,9 @@ namespace MdTZ
 
             //double rmbRate = JsonApi.getRMBRate();
 
-            MdQry.GetLastBars("SHSE.601318", 30);
+           // MdQry.GetLastBars("SHSE.601318", 30);
+
+            Console.Write(" RegexDao.isDpContionDown():" + RegexDao.isDpContionDown());
         }
 
         public void output(string log)
@@ -462,62 +467,21 @@ namespace MdTZ
 
        
         #region 定时器
-        private void gp_trans_Time_Tick(object sender, EventArgs e)
-        {
-            List<GuoPiao> gps = null;
-            try
-            {
-                gps = SinaAPI.getGPList(TranApi.tickCodes);
-            }
-            catch (Exception ee)
-            {
-                output(ee.Message);      
-            }
-          
-            //开始交易
-            if (gps != null)
-            {
-                output("###开始交易##,gps.size:" + gps.Count);
-            }           
-            output("趋势值:" + QuShi.qsz);
-            if (GPUtil.isTranTime() && !TranApi.isTraning)
-            {
-                //交易事件触发
-                EventHandler<EventArgs> tranEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_TRANS];
-                tranEvent.BeginInvoke(gps, EventArgs.Empty, null, null);
-                 
-            }
-            output("###结束交易##");      
-        }
 
         private void get_filter_timer_Tick(object sender, EventArgs e)
         {
 
-            //开始交易
-            output("###刷新交易开始##");
-            if (GPUtil.isTranTime() && !TranApi.isTraning)
-            {
-                TranApi.isTraning = true;
-                //方法测试
-                ZXApi.refreshWin();
-
-                TranApi.isTraning = false;
-
-            }
-            output("###结束刷新交易##");  
-
-
             //初始化股票信息 
-            if (DateTime.Now.Hour > 16)
+            if (DateTime.Now.Hour >= 16)
             {
-                HisDataAPI.saveTodayHisDataFromSina();  
+                HisDataAPI.saveTodayHisDataFromSina();
             }
 
             output("###初始化下外汇开始##");
             //初始化下外汇          
             HisDataAPI.refreshRMB();
-            output("###结束初始化下外汇 ##");       
-                               
+            output("###结束初始化下外汇 ##");
+
             //output("###刷新要闻信息##");
             //EventHandler<EventArgs> gpEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_REFSH_YW];
             //gpEvent.BeginInvoke(gp_web, EventArgs.Empty, null, null);
@@ -535,29 +499,85 @@ namespace MdTZ
             //List<DaoPan> dpList = SinaAPI.getDPList("a");
             //DaoPan sh_dp = dpList[0];
             //Console.WriteLine(DateTime.Now.ToString() + "[sh_dp.zdf]:" + sh_dp.zs + "," + sh_dp.zdl);
-                       
+
         }
 
-        private void gp_sel_timer_Tick(object sender, EventArgs e)
-        {
-            HGStaUtil.hgDics = HGStaUtil.getHgZbList(TranApi.tickSqlCodes);
-            
+        private void gp_buys_Time_Tick(object sender, EventArgs e)
+        {        
+            tran_cnt++;
+            output("开始买入趋势值:" + QuShi.qsz);
+            //获取TICK 数据          
+            try
+            {
+                tran_gps = SinaAPI.getGPList(TranApi.tickCodes);
+                if (tran_gps != null)
+                {
+                    output("####开始交易交易标的数gps.size:" + tran_gps.Count);
+                }               
+            }
+            catch (Exception ee)
+            {
+                output(ee.Message);      
+            }                                 
 
-                                                      
-          
+            //刷新交易开始           
+            if (GPUtil.isTranTime() && !TranApi.isTraning)
+            {
+                //10次刷新一次
+                Console.WriteLine("trans.cn {0}", tran_cnt);
+                if (tran_cnt % 10 == 0)
+                {                  
+                    TranApi.isTraning = true;
+                    //方法测试
+                    ZXApi.refreshWin();
+                    TranApi.isTraning = false;
+                }               
+            }            
+
+            //交易事件触发
+            if (GPUtil.isTranTime() && !TranApi.isTraning)
+            {
+                EventHandler<EventArgs> tranEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_BUY_TRANS];
+                tranEvent.BeginInvoke(tran_gps, EventArgs.Empty, null, null);
+                 
+            }
+            output("###结束交易##");      
+        }
+
+        private void gp_sells_timer_Tick(object sender, EventArgs e)
+        {           
+            output("开市卖出趋势值:" + QuShi.qsz);
+
+            if (tran_gps == null || tran_gps.Count == 0)
+            {
+                return;
+            }
+
+            //交易事件触发
+            if (GPUtil.isTranTime() && !TranApi.isTraning)
+            {
+                EventHandler<EventArgs> tranEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_SELL_TRANS];
+                tranEvent.BeginInvoke(tran_gps, EventArgs.Empty, null, null);
+
+            }
+            output("###结束交易##");   
         }
 
         #endregion
 
         private void 交易启动ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            gp_trans_Time.Enabled = true;
+            gp_buys_Time.Enabled = true;
+            gp_sells_timer.Enabled = true;
         }
 
         private void 交易停止ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            gp_trans_Time.Enabled = false;
-            gp_trans_Time.Stop();
+            gp_buys_Time.Enabled = false;
+            gp_buys_Time.Stop();
+
+            gp_sells_timer.Enabled = false;
+            gp_sells_timer.Stop();
         }
 
         private void 退出程序ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -575,8 +595,8 @@ namespace MdTZ
         {
             StrategySimple test = new StrategySimple();
 
-            int ret = MdComm.setStrategyInit(test, 3, "000001", "strategy_1", null);
-            MdComm.setStrategyBackTestInit(test, "2015-12-25 09:30:00", "2016-1-29 15:15:00", 0);
+            int ret = MdComm.setStrategyInit(test, 3, "000001,002027", "strategy_1", null);
+            MdComm.setStrategyBackTestInit(test, "2015-12-25 09:30:00", "2016-1-29 15:15:00", 1000000);
 
             System.Console.WriteLine("init: {0}", ret);
 

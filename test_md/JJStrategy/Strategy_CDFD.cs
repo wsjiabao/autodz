@@ -6,14 +6,16 @@ using System.Text;
 
 namespace MdTZ
 {
-    class StrategySimple : Strategy
+    /// <summary>
+    /// 抄底反弹策略
+    /// 
+    /// 1,前日必须跌幅较大
+    /// 2,当日大盘涨幅达到1%
+    /// 3,仓位做递增处理
+    /// </summary>
+    class Strategy_CDFT : Strategy
     {
         private bool flag = true;
-
-        private static bool buyFlag = false;
-        private double lastDpZs = 0;
-        private double lastDpZf = 0;
-
         private int count = 0;
 
         /// <summary>
@@ -21,34 +23,28 @@ namespace MdTZ
         /// </summary>
         /// <param name="tick"></param>
         public override void OnTick(Tick tick)
-        {
+        {           
             Console.WriteLine(
-                "tick {0}: time={1} symbol={2} last_price={3} :",
-                HGStaUtil.getTickZF(tick),
+                "tick {0}: time={1} symbol={2} last_price={3}",
+                this.count,
                 tick.utc_time,
                 tick.sec_id,
                 tick.last_price);
 
-            double cutZf = 0;
-            //大盘涨幅达到1的时候买入头寸
-            if (HGStaUtil.isSHTick(tick) && HGStaUtil.getTickZF(tick) >= 1 && !buyFlag)
+            if (this.count % 10 == 0)
             {
-                cutZf = HGStaUtil.getTickZFFrmLastBuy(tick, lastDpZf);
-                if (lastDpZs == 0 || cutZf >= 1)
-                {
-                    buyFlag = true;
-                    Console.WriteLine("lastDpZs {0} cutZf {1}:", lastDpZs, cutZf);
-                }                            
+                //if (this.flag)
+                //{
+                //    OpenLong(tick.exchange, tick.sec_id, tick.last_price, 100);  //最新价开仓一手
+                //}
+                //else
+                //{
+                //    CloseLong(tick.exchange, tick.sec_id, tick.last_price, 100); //最新价平仓一手
+                //}
             }
-            else if (!HGStaUtil.isSHTick(tick) && buyFlag)
-            {
-                Console.WriteLine("buyFlag {0} buycode {1}:", buyFlag, tick.sec_id);
-                OpenLong(tick.exchange, tick.sec_id, tick.last_price, 100);  //最新价开仓一手  
-                buyFlag = false;                                                              
-            }
-           
-            lastDpZs = tick.last_price;
-          
+
+            this.count++;
+            this.flag = !this.flag;
         }
 
         /// <summary>
@@ -57,12 +53,12 @@ namespace MdTZ
         /// <param name="bar"></param>
         public override void OnBar(Bar bar)
         {
-            //Console.WriteLine(
-            //    "bar: time={1} symbol={2} close_price={3}",
-            //    this.count,
-            //    bar.strtime,
-            //    bar.sec_id,
-            //    bar.close);
+            Console.WriteLine(
+                "bar: time={1} symbol={2} close_price={3}",
+                this.count,
+                bar.strtime,
+                bar.sec_id,
+                bar.close);
         }
 
         /// <summary>

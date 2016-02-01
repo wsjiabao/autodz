@@ -221,9 +221,12 @@ namespace MdTZ
             if (code.IndexOf("sh") != -1 || code.IndexOf("sz") != -1)
             {
                 code = code.Replace("sh", "").Replace("sz", "");
-            }           
+            }
 
-            if (code.IndexOf("6") == 0)
+            if (code.IndexOf("000001") == 0)
+            {
+                rtnCode = "SHSE." + code;
+            }else if (code.IndexOf("6") == 0)
             {
                 rtnCode = "SHSE." + code;
             }

@@ -18,14 +18,21 @@ namespace MdTZ
 
         public static List<string> buyCodes = new List<string>();     
         public static List<string> sellCodes = new List<string>();
-        public static string tickCodes = "sh000001,";
+
+
+        public static string tickCodes = "sh000001,sz399001,sz399006,";
+        public static string tickSqlCodes = "'sh000001','sz399001','sz399006',";
 
         public static List<GpTranBean> buyedCodes = new List<GpTranBean>();
         public static List<GpTranBean> selledCodes = new List<GpTranBean>();
 
         //交易时间-交易次数
-        public static Dictionary<string, int> tranTimes = new Dictionary<string, int>{
-             {"9.35-9.50",1},{"14.30-14.50",1},{"20.20-22.30",1}
+        public static Dictionary<string, int> tranBuyTimes = new Dictionary<string, int>{
+             {"9.35-9.50",1},{"14.30-14.50",1},{"19.00-22.30",1}
+        };
+
+        public static Dictionary<string, int> tranSellTimes = new Dictionary<string, int>{
+             {"9.35-9.50",1},{"14.30-14.50",1},{"19.00-22.30",1}
         };
 
         //public static Dictionary<string, int> tranTimes = new Dictionary<string, int>();
@@ -44,10 +51,9 @@ namespace MdTZ
             string type = GPUtil.helper.ExecuteDataRow("select qsnow from gpparam")["qsnow"].ToString();
             DataTable ts = GPUtil.helper.ExecuteDataTable("select btime,etime,cnt from tranplan where type='" + type + "' order by btime");
             foreach(DataRow r in ts.Rows) {
-                tranTimes.Add(tranPlan(r["btime"].ToString()) + "-" + tranPlan(r["etime"].ToString()), Convert.ToInt16(r["cnt"]));
+                tranBuyTimes.Add(tranPlan(r["btime"].ToString()) + "-" + tranPlan(r["etime"].ToString()), Convert.ToInt16(r["cnt"]));
             }
         }
-
 
         /// <summary>
         /// 获取可用金额
@@ -104,7 +110,7 @@ namespace MdTZ
         /// 交易时间控制
         /// </summary>
         /// <returns></returns>
-        public static int getTranTimeNow()
+        public static int getTranTimeNow(Dictionary<string, int> tranTimes)
         {
             double nowTime = Convert.ToDouble(DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString());
             double b_time = 0;
@@ -127,7 +133,6 @@ namespace MdTZ
             return -1;
         }
 
-  
         public static void add_buys_codes()
         {
            
@@ -139,11 +144,11 @@ namespace MdTZ
             {
                 code = r["code"].ToString();
                 tickCodes += code + ",";
+                tickSqlCodes += "'" + code + "',";
                 TranApi.buyCodes.Add(code);               
             }
 
         }
-
 
         public static void add_sells_codes()
         {
@@ -155,12 +160,12 @@ namespace MdTZ
             {
                 code = r["code"].ToString();
                 tickCodes += code + ",";
+                tickSqlCodes += "'" + code + "',";
                 TranApi.sellCodes.Add(code);
             }
 
         }
      
-
         /// <summary>
         /// 
         /// 检查是否已经买入
@@ -178,162 +183,128 @@ namespace MdTZ
                 return false;
             }
         }
-
-        /// <summary>
-        /// 交易开始
-        /// </summary>
-        /// <returns></returns>
-        public static int do_tran_process(List<GuoPiao> gps)
-        {
-
-            isTraning = true;
-
-            int rtnValue = 0;
-            //先卖出          
-            rtnValue = TranApi.do_sell_process_ext();
-            Console.WriteLine("do_sell_process.cnt:" + rtnValue);
-
-            //暂停
-            //Thread.Sleep(500);
-
-            //买入
-            //rtnValue = TranApi.do_buy_process_ext();
-
-
-            isTraning = false;
-            Console.WriteLine("do_buy_process_ext.cnt:" + rtnValue);
-            return rtnValue;
-        }
-
+    
         /// <summary>
         /// 发起买入处理
         /// </summary>
         /// <returns></returns>
-        public static int do_buy_process_ext()
+        public static int do_buy_process(List<GuoPiao> dpgps,List<GuoPiao> buygps)
         {
 
+            if (isTraning)
+            {
+                return 0;
+            }
+
+            isTraning = true;         
             double qsz = QuShi.qsz;
-
-            Console.WriteLine("do_buy_process_ext.QuShi.qsz:" + qsz);         
-            /**
-             * 买入先决条件
-             **/
-            //if (qsz < 0)
-            //{
-            //    return -1;
-            //}
-
+            //Console.WriteLine("do_buy_processt.QuShi.qsz:" + qsz);                    
+           
             string real_code = "";
             string log_str = "";
             int buyCnt = 0;        
             int buyNums = 100;
             double price = 0;
             double[] rtnValue = null;
-            if (buyCodes.Count > 0)
-            {                                    
-
-                foreach (string code in buyCodes)
-                {
-                    real_code = getTransCode(code);                  
+           
+            foreach (GuoPiao gp in buygps)
+            {
+                real_code = getTransCode(gp.code);                  
                   
-                    //不在时间计划内
-                    if (TranApi.getTranTimeNow() <= 0)
-                    {                      
-                        break;
-                    }                                    
+                //不在时间计划内
+                if (TranApi.getTranTimeNow(tranBuyTimes) <= 0)
+                {                      
+                    break;
+                }                                    
 
-                    //根据当前仓位获取股票数 
-                    try
-                    {
-                        rtnValue = getCanBuyNums(code);
-                        buyNums = Convert.ToInt16(rtnValue[0]);
-                        price = rtnValue[1];
-                    }
-                    catch (Exception e)
-                    {
-                        GPUtil.write(e.Message);
-                    }
-
-                    GPUtil.write("开始买入:" + real_code);
-                                      
-                    //发起交易
-                    //THSAPI.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 1 * 100); 
-                    ZXApi.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 1 * 100);                  
-
-                    //更新交易数据                 
-                    GPUtil.helper.ExecuteNonQuery("INSERT INTO gpsell (CODE,cbj,num,flag,buydate,DATE) values ('" + code + "',"
-                         + price + "," + buyNums * 100 + ",0,'" + DateTime.Now + "','" + DateTime.Now + "')");
-
-                    log_str = "结束买入[" + real_code + "] 数量:" + buyNums * 100 + " 价格:" + price;
-                    Console.WriteLine(log_str);
-                    GPUtil.write(log_str);
-
-                    buyCnt++;
-
-                    //暂停
-                    Thread.Sleep(300);                                                                                    
+                //根据当前仓位获取股票数 
+                try
+                {
+                    rtnValue = getCanBuyNums(gp.code);
+                    buyNums = Convert.ToInt16(rtnValue[0]);
+                    price = rtnValue[1];
                 }
+                catch (Exception e)
+                {
+                    GPUtil.write(e.Message);
+                }
+
+                GPUtil.write("开始买入:" + real_code);
+                           
+                //发起交易
+                //THSAPI.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 1 * 100); 
+                ZXApi.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 1 * 100);                  
+
+                //更新交易数据                 
+                GPUtil.helper.ExecuteNonQuery("INSERT INTO gpsell (CODE,cbj,num,flag,buydate,DATE) values ('" + gp.code + "',"
+                        + price + "," + buyNums * 100 + ",0,'" + DateTime.Now + "','" + DateTime.Now + "')");
+
+                log_str = "结束买入[" + real_code + "] 数量:" + buyNums * 100 + " 价格:" + price;
+                Console.WriteLine(log_str);
+                GPUtil.write(log_str);
+
+                buyCnt++;
+                                                                                           
             }
 
+            isTraning = false;
             return buyCnt;
         }
 
-        public static int do_sell_process_ext()
+        /// <summary>
+        /// 卖出
+        /// </summary>
+        /// <param name="dpgps"></param>
+        /// <param name="sellgps"></param>
+        /// <returns></returns>
+        public static int do_sell_process(List<GuoPiao> dpgps,List<GuoPiao> sellgps)
         {
+            if (isTraning)
+            {
+                return 0;
+            }
 
-            double qsz = QuShi.qsz;
-            qsz = -1;
-
-            Console.WriteLine("do_sell_process_ext.checkValue:" + qsz);
-            GPUtil.write("do_sell_process_ext.checkValue##########:" + qsz);
-
+            isTraning = true;         
+            //double qsz = QuShi.qsz;                    
             int rtnSells = 0;
 
             /**
              * 卖出先决条件
-             **/
-            if (qsz <= 0)
-            {
-                    
-                string real_code = "";              
-                string log_str = "";              
-                double price = 0;      
-                foreach (string code in TranApi.sellCodes)
-                    {                       
-                        real_code = getTransCode(code);
-                        log_str = "开始卖出[" + code  + "]";
-                        Console.WriteLine(log_str);                    
-                        GPUtil.write(log_str);              
+             **/                               
+            string real_code = "";              
+            string log_str = "";              
+            double price = 0;
+            foreach (GuoPiao gp in sellgps)
+                {
+                    real_code = getTransCode(gp.code);                  
+                      
+                    //不在时间计划内
+                    if (TranApi.getTranTimeNow(tranSellTimes) <= 0)
+                    {
+                        break;
+                    }
 
-                        //不在时间计划内
-                        if (TranApi.getTranTimeNow() <= 0)
-                        {
-                            break;
-                        }                       
+                    log_str = "开始卖出[" + gp.code + "]";                  
+                    GPUtil.write(log_str);
+                 
+                    //方法测试
+                    //THSAPI.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);  
+                    ZXApi.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);                       
 
-                        //方法测试
-                        //THSAPI.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);  
-                        ZXApi.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);                       
+                    //更新交易数据                 
+                    GPUtil.helper.ExecuteNonQuery("update gpsell set num = num-100 where code='" + gp.code + "'");
 
-                        //更新交易数据                 
-                        GPUtil.helper.ExecuteNonQuery("update gpsell set num = num-100 where code='" + code + "'");
+                    log_str = "结束卖出[" + real_code + "] 数量:" + 1 * 100;
+                    GPUtil.write(log_str);  
 
-                        log_str = "结束卖出[" + real_code + "] 数量:" + 1 * 100;
-                        GPUtil.write(log_str);  
-
-                        rtnSells++;
-
-                        //暂停
-                        Thread.Sleep(300);
-                    }               
-
+                    rtnSells++;
+                  
                 }
 
+            isTraning = false;    
 
             return rtnSells;
         }
-
-
 
 
         /// <summary>

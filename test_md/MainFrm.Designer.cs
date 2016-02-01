@@ -56,7 +56,9 @@
             this.stop = new System.Windows.Forms.ToolStripMenuItem();
             this.交易启动ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.交易停止ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gp_trans_Time = new System.Windows.Forms.Timer(this.components);
+            this.策略测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.演示策略ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gp_buys_Time = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gp_web = new System.Windows.Forms.WebBrowser();
@@ -65,9 +67,7 @@
             this.cb_new_type = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.get_filter_timer = new System.Windows.Forms.Timer(this.components);
-            this.gp_sel_timer = new System.Windows.Forms.Timer(this.components);
-            this.策略测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.演示策略ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gp_sells_timer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -103,26 +103,26 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
             // 
             // 新闻分析ToolStripMenuItem
             // 
             this.新闻分析ToolStripMenuItem.Name = "新闻分析ToolStripMenuItem";
-            this.新闻分析ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.新闻分析ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.新闻分析ToolStripMenuItem.Text = "新闻分析";
             this.新闻分析ToolStripMenuItem.Click += new System.EventHandler(this.新闻分析ToolStripMenuItem_Click);
             // 
             // 要闻刷新ToolStripMenuItem
             // 
             this.要闻刷新ToolStripMenuItem.Name = "要闻刷新ToolStripMenuItem";
-            this.要闻刷新ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.要闻刷新ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.要闻刷新ToolStripMenuItem.Text = "要闻刷新";
             this.要闻刷新ToolStripMenuItem.Click += new System.EventHandler(this.要闻刷新ToolStripMenuItem_Click);
             // 
             // 退出程序ToolStripMenuItem
             // 
             this.退出程序ToolStripMenuItem.Name = "退出程序ToolStripMenuItem";
-            this.退出程序ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出程序ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.退出程序ToolStripMenuItem.Text = "退出程序";
             this.退出程序ToolStripMenuItem.Click += new System.EventHandler(this.退出程序ToolStripMenuItem_Click);
             // 
@@ -266,35 +266,50 @@
             // start
             // 
             this.start.Name = "start";
-            this.start.Size = new System.Drawing.Size(124, 22);
+            this.start.Size = new System.Drawing.Size(152, 22);
             this.start.Text = "启动";
             this.start.Click += new System.EventHandler(this.start_Click);
             // 
             // stop
             // 
             this.stop.Name = "stop";
-            this.stop.Size = new System.Drawing.Size(124, 22);
+            this.stop.Size = new System.Drawing.Size(152, 22);
             this.stop.Text = "停止";
             this.stop.Click += new System.EventHandler(this.stop_Click);
             // 
             // 交易启动ToolStripMenuItem
             // 
             this.交易启动ToolStripMenuItem.Name = "交易启动ToolStripMenuItem";
-            this.交易启动ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.交易启动ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.交易启动ToolStripMenuItem.Text = "交易启动";
             this.交易启动ToolStripMenuItem.Click += new System.EventHandler(this.交易启动ToolStripMenuItem_Click);
             // 
             // 交易停止ToolStripMenuItem
             // 
             this.交易停止ToolStripMenuItem.Name = "交易停止ToolStripMenuItem";
-            this.交易停止ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.交易停止ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.交易停止ToolStripMenuItem.Text = "交易停止";
             this.交易停止ToolStripMenuItem.Click += new System.EventHandler(this.交易停止ToolStripMenuItem_Click);
             // 
-            // gp_trans_Time
+            // 策略测试ToolStripMenuItem
             // 
-            this.gp_trans_Time.Interval = 5000;
-            this.gp_trans_Time.Tick += new System.EventHandler(this.gp_trans_Time_Tick);
+            this.策略测试ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.演示策略ToolStripMenuItem});
+            this.策略测试ToolStripMenuItem.Name = "策略测试ToolStripMenuItem";
+            this.策略测试ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.策略测试ToolStripMenuItem.Text = "策略测试";
+            // 
+            // 演示策略ToolStripMenuItem
+            // 
+            this.演示策略ToolStripMenuItem.Name = "演示策略ToolStripMenuItem";
+            this.演示策略ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.演示策略ToolStripMenuItem.Text = "演示策略";
+            this.演示策略ToolStripMenuItem.Click += new System.EventHandler(this.演示策略ToolStripMenuItem_Click);
+            // 
+            // gp_buys_Time
+            // 
+            this.gp_buys_Time.Interval = 5000;
+            this.gp_buys_Time.Tick += new System.EventHandler(this.gp_buys_Time_Tick);
             // 
             // groupBox1
             // 
@@ -407,25 +422,10 @@
             this.get_filter_timer.Interval = 60000;
             this.get_filter_timer.Tick += new System.EventHandler(this.get_filter_timer_Tick);
             // 
-            // gp_sel_timer
+            // gp_sells_timer
             // 
-            this.gp_sel_timer.Interval = 20000;
-            this.gp_sel_timer.Tick += new System.EventHandler(this.gp_sel_timer_Tick);
-            // 
-            // 策略测试ToolStripMenuItem
-            // 
-            this.策略测试ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.演示策略ToolStripMenuItem});
-            this.策略测试ToolStripMenuItem.Name = "策略测试ToolStripMenuItem";
-            this.策略测试ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.策略测试ToolStripMenuItem.Text = "策略测试";
-            // 
-            // 演示策略ToolStripMenuItem
-            // 
-            this.演示策略ToolStripMenuItem.Name = "演示策略ToolStripMenuItem";
-            this.演示策略ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.演示策略ToolStripMenuItem.Text = "演示策略";
-            this.演示策略ToolStripMenuItem.Click += new System.EventHandler(this.演示策略ToolStripMenuItem_Click);
+            this.gp_sells_timer.Interval = 5000;
+            this.gp_sells_timer.Tick += new System.EventHandler(this.gp_sells_timer_Tick);
             // 
             // MainFrm
             // 
@@ -469,7 +469,7 @@
         private System.Windows.Forms.ToolStripMenuItem mainPro;
         private System.Windows.Forms.ToolStripMenuItem start;
         private System.Windows.Forms.ToolStripMenuItem stop;
-        private System.Windows.Forms.Timer gp_trans_Time;
+        private System.Windows.Forms.Timer gp_buys_Time;
         private System.Windows.Forms.ToolStripMenuItem forTest;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txt_log;
@@ -489,7 +489,7 @@
         private System.Windows.Forms.ToolStripMenuItem 最小化ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 要闻刷新ToolStripMenuItem;
         private System.Windows.Forms.Timer get_filter_timer;
-        private System.Windows.Forms.Timer gp_sel_timer;
+        private System.Windows.Forms.Timer gp_sells_timer;
         private System.Windows.Forms.ToolStripMenuItem 交易启动ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 交易停止ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 退出程序ToolStripMenuItem;

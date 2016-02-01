@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GMSDK;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -13,44 +14,57 @@ namespace MdTZ
     {
         public static Dictionary<string, HgZb> hgDics = new Dictionary<string, HgZb>();
 
+        public static Dictionary<string, int> hasXHDic = new Dictionary<string, int>();             
+
         /// <summary>
-        /// 获取指标MAP
+        /// 是否上证大盘
         /// </summary>
-        /// <param name="codes"></param>
+        /// <param name="tick"></param>
         /// <returns></returns>
-        public static Dictionary<string, HgZb> getHgZbList(string codes)
+        public static bool isSHTick(Tick tick)
         {
-
-            if (codes.IndexOf(",") != -1)
+            if (tick == null)
             {
-                codes = codes.Substring(0, codes.IndexOf(","));
+                return false;
             }
 
-            Dictionary<string, HgZb> hgDics = new Dictionary<string, HgZb>();
-            HgZb zb = null;
-
-            DataTable dataTable = GPUtil.helper.ExecuteDataTable("SELECT code,zg20,zd20,zg55,zd55 FROM gpjx where code in (" + codes+ ")", GPUtil.parms);
-        
-            if (dataTable != null)
+            if (tick.sec_id.Equals("000001"))
             {
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    zb = new HgZb();
-                    zb.code = row["code"].ToString();
-                    zb.zd20 = (Double)row["zd20"];                 
-                    zb.zg20 = (Double)row["zg20"];
-                    zb.zd55 = (Double)row["zg20"];
-                    zb.zg55 = (Double)row["zg55"];
-                    hgDics.Add(zb.code, zb);
-                }
+                return true;
             }
-            return hgDics;
+
+            return false;
         }
 
-       
-       
+        /// <summary>        
+        /// 涨幅
+        /// </summary>
+        /// <param name="gp"></param>
+        /// <returns></returns>
+        public static double getTickZF(Tick gp)
+        {
+            if (gp.pre_close > 0)
+                {
+                    return Math.Round(((gp.last_price - gp.pre_close) / gp.pre_close) * 100,2); //涨幅
+                }
 
-        
+            return 0;
+        }
+
+        /// <summary>        
+        /// 上次买入后的涨幅
+        /// </summary>
+        /// <param name="gp"></param>
+        /// <returns></returns>
+        public static double getTickZFFrmLastBuy(Tick gp, double lastBuy)
+        {
+            if (lastBuy > 0)
+            {
+                return Math.Round(((gp.last_price - lastBuy) / lastBuy) * 100, 2); //涨幅
+            }
+
+            return 0;
+        }
 
 
     }

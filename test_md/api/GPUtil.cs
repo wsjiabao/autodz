@@ -100,6 +100,24 @@ namespace MdTZ
             return 0;
         }
 
+
+        /**
+        * 大盘历史涨幅
+        * */
+        public static string getDPHis()
+        {
+            string his = "";
+            string sql = "SELECT h.his FROM 大盘历史 h WHERE h.`code` = 'sh000001'";
+            DataRow row = helper.ExecuteDataRow(sql, parms);
+
+            if (row != null)
+            {
+                his = row["his"].ToString();
+            }
+
+            return his;
+        }
+
         /**
         * 获取跌停价格
         * */
