@@ -18,18 +18,25 @@ namespace MdTZ
             string priceOpt,
             double price,
             string cntOpt,
-            int cnt
+            int cnt,
+            int waittime
         )
         {
+
+            if (waittime == 0)
+            {
+                waittime = 300;
+            }
+
             //买出
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 1745, 38800, 0, 0);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
-            Thread.Sleep(300);           
+            Thread.Sleep(waittime);           
 
             //输入股票代码         
             THSAPI.inputCode(code);
             WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
-            Thread.Sleep(300);
+            Thread.Sleep(waittime);
 
             //股票价格
             if (priceOpt.Equals(THSAPI.PRICE_OPT_SELL_2))
@@ -38,7 +45,7 @@ namespace MdTZ
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 18700, 41080, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
                 WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
             else if (priceOpt.Equals(THSAPI.PRICE_OPT_BUY_2))
             {
@@ -46,7 +53,7 @@ namespace MdTZ
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 18700, 42080, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
                 WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
 
             //数量卖出-全部
@@ -55,46 +62,48 @@ namespace MdTZ
                 //全部
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 18045, 43000, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
             else if (cntOpt.Equals(THSAPI.NUM_OPT_INPUT))
             {
                 THSAPI.inputNum(cnt.ToString());
                 WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
             else if (cntOpt.Equals(THSAPI.NUM_OPT_50))
             {
                 //1/2
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 11500, 44500, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
             else if (cntOpt.Equals(THSAPI.NUM_OPT_30))
             {
                 //1/3
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 13200, 44600, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
             else if (cntOpt.Equals(THSAPI.NUM_OPT_25))
             {
                 //1/4
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 15500, 44500, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }
             else if (cntOpt.Equals(THSAPI.NUM_OPT_20))
             {
                 //1/5
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_ABSOLUTE | WinAPI.MOUSEEVENTF_MOVE, 17800, 44500, 0, 0);
                 WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN | WinAPI.MOUSEEVENTF_LEFTUP, 1, 1, 0, 0);
-                Thread.Sleep(300);
+                Thread.Sleep(waittime);
             }                             
 
             //交易确认
             WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
-            Thread.Sleep(300);
+            Thread.Sleep(waittime);
+            WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
+            Thread.Sleep(waittime);
             WinAPI.keybd_event((byte)Keys.Enter, 0, 0, 0);
 
             return 0;

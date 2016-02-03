@@ -103,26 +103,26 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // 新闻分析ToolStripMenuItem
             // 
             this.新闻分析ToolStripMenuItem.Name = "新闻分析ToolStripMenuItem";
-            this.新闻分析ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.新闻分析ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.新闻分析ToolStripMenuItem.Text = "新闻分析";
             this.新闻分析ToolStripMenuItem.Click += new System.EventHandler(this.新闻分析ToolStripMenuItem_Click);
             // 
             // 要闻刷新ToolStripMenuItem
             // 
             this.要闻刷新ToolStripMenuItem.Name = "要闻刷新ToolStripMenuItem";
-            this.要闻刷新ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.要闻刷新ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.要闻刷新ToolStripMenuItem.Text = "要闻刷新";
             this.要闻刷新ToolStripMenuItem.Click += new System.EventHandler(this.要闻刷新ToolStripMenuItem_Click);
             // 
             // 退出程序ToolStripMenuItem
             // 
             this.退出程序ToolStripMenuItem.Name = "退出程序ToolStripMenuItem";
-            this.退出程序ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.退出程序ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.退出程序ToolStripMenuItem.Text = "退出程序";
             this.退出程序ToolStripMenuItem.Click += new System.EventHandler(this.退出程序ToolStripMenuItem_Click);
             // 
@@ -143,49 +143,49 @@
             // 财务数据ToolStripMenuItem
             // 
             this.财务数据ToolStripMenuItem.Name = "财务数据ToolStripMenuItem";
-            this.财务数据ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.财务数据ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.财务数据ToolStripMenuItem.Text = "财务数据";
             this.财务数据ToolStripMenuItem.Click += new System.EventHandler(this.财务数据ToolStripMenuItem_Click);
             // 
             // forTest
             // 
             this.forTest.Name = "forTest";
-            this.forTest.Size = new System.Drawing.Size(148, 22);
+            this.forTest.Size = new System.Drawing.Size(152, 22);
             this.forTest.Text = "存测试";
             this.forTest.Click += new System.EventHandler(this.forTest_Click);
             // 
             // 新闻获取ToolStripMenuItem
             // 
             this.新闻获取ToolStripMenuItem.Name = "新闻获取ToolStripMenuItem";
-            this.新闻获取ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.新闻获取ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.新闻获取ToolStripMenuItem.Text = "新闻获取";
             this.新闻获取ToolStripMenuItem.Click += new System.EventHandler(this.新闻获取ToolStripMenuItem_Click);
             // 
             // 个股公告ToolStripMenuItem
             // 
             this.个股公告ToolStripMenuItem.Name = "个股公告ToolStripMenuItem";
-            this.个股公告ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.个股公告ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.个股公告ToolStripMenuItem.Text = "个股公告";
             this.个股公告ToolStripMenuItem.Click += new System.EventHandler(this.个股公告ToolStripMenuItem_Click);
             // 
             // 新闻后处理ToolStripMenuItem
             // 
             this.新闻后处理ToolStripMenuItem.Name = "新闻后处理ToolStripMenuItem";
-            this.新闻后处理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.新闻后处理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.新闻后处理ToolStripMenuItem.Text = "新闻后处理";
             this.新闻后处理ToolStripMenuItem.Click += new System.EventHandler(this.新闻后处理ToolStripMenuItem_Click);
             // 
             // 保存到自选股ToolStripMenuItem
             // 
             this.保存到自选股ToolStripMenuItem.Name = "保存到自选股ToolStripMenuItem";
-            this.保存到自选股ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.保存到自选股ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存到自选股ToolStripMenuItem.Text = "保存到自选股";
             this.保存到自选股ToolStripMenuItem.Click += new System.EventHandler(this.保存到自选股ToolStripMenuItem_Click);
             // 
             // 删除自选股ToolStripMenuItem
             // 
             this.删除自选股ToolStripMenuItem.Name = "删除自选股ToolStripMenuItem";
-            this.删除自选股ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.删除自选股ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.删除自选股ToolStripMenuItem.Text = "删除自选股";
             this.删除自选股ToolStripMenuItem.Click += new System.EventHandler(this.删除自选股ToolStripMenuItem_Click);
             // 
@@ -266,28 +266,28 @@
             // start
             // 
             this.start.Name = "start";
-            this.start.Size = new System.Drawing.Size(152, 22);
+            this.start.Size = new System.Drawing.Size(124, 22);
             this.start.Text = "启动";
             this.start.Click += new System.EventHandler(this.start_Click);
             // 
             // stop
             // 
             this.stop.Name = "stop";
-            this.stop.Size = new System.Drawing.Size(152, 22);
+            this.stop.Size = new System.Drawing.Size(124, 22);
             this.stop.Text = "停止";
             this.stop.Click += new System.EventHandler(this.stop_Click);
             // 
             // 交易启动ToolStripMenuItem
             // 
             this.交易启动ToolStripMenuItem.Name = "交易启动ToolStripMenuItem";
-            this.交易启动ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.交易启动ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.交易启动ToolStripMenuItem.Text = "交易启动";
             this.交易启动ToolStripMenuItem.Click += new System.EventHandler(this.交易启动ToolStripMenuItem_Click);
             // 
             // 交易停止ToolStripMenuItem
             // 
             this.交易停止ToolStripMenuItem.Name = "交易停止ToolStripMenuItem";
-            this.交易停止ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.交易停止ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.交易停止ToolStripMenuItem.Text = "交易停止";
             this.交易停止ToolStripMenuItem.Click += new System.EventHandler(this.交易停止ToolStripMenuItem_Click);
             // 

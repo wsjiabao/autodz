@@ -11,6 +11,9 @@ namespace MdTZ
     public class THSAPI
     {
 
+        //窗口状态
+        public static string winSta = "";
+
         /**
          * 买入策略
          * */
