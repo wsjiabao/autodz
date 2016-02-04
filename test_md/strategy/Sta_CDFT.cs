@@ -9,6 +9,8 @@ namespace MdTZ
     class Sta_CDFT
     {
 
+
+
         /// <summary>
         /// 下跌大盘
         /// </summary>

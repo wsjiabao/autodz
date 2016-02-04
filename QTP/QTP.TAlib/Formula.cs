@@ -5,6 +5,10 @@ using System.Reflection;
 
 namespace QTP.TAlib
 {
+
+    /// <summary>
+    /// 公式
+    /// </summary>
     public class Formula
     {
         public static void MA<S, T>(RList<S> s, string sname, int n, RList<T> t, string tname)

@@ -46,16 +46,16 @@ namespace MdTZ
         {
             //方法测试
             //THSAPI.buyIn("000001", THSAPI.PRICE_OPT_NOW, 0, THSAPI.NUM_OPT_ALL, 0);
-            ZXApi.buyIn("600007", THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 100);
-            // ZXApi.buyIn_cur("601288", THSAPI.NUM_OPT_50, 100);
+            //ZXApi.buyIn("600007", THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 100);
+            ZXApi.buyIn_cur("601288", THSAPI.NUM_OPT_INPUT, 100);
         }
 
         private void buyOut_Click(object sender, EventArgs e)
         {
             //方法测试
             //THSAPI.sellOut("600007", THSAPI.PRICE_OPT_BUY_2,0, THSAPI.NUM_OPT_INPUT, 100);
-            ZXApi.sellOut("601288", THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100, 1000);
-            //ZXApi.sellOut_cur("601288", THSAPI.NUM_OPT_30, 100);
+            //ZXApi.sellOut("601288", THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100, 1000);
+            ZXApi.sellOut_cur("601288", THSAPI.NUM_OPT_INPUT, 100);
         }
 
         private void storeSell_Click(object sender, EventArgs e)

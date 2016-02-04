@@ -80,8 +80,7 @@ namespace MdTZ
             //DaoPan dp = dpList[0];
             //MessageBox.Show(dp.name + "|" + dp.zs);
 
-            StoreMng.updateBuyedAmt(10000);
-            MessageBox.Show(StoreMng.buyedAmt.ToString());
+           
             
         }
 

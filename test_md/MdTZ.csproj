@@ -163,7 +163,7 @@
     <Compile Include="manage\ProfitMng.cs" />
     <Compile Include="manage\QuShi.cs" />
     <Compile Include="manage\StoreMng.cs" />
-    <Compile Include="strates\Sta_CDFT.cs" />
+    <Compile Include="strategy\Sta_CDFT.cs" />
     <Compile Include="test\Test.cs" />
     <Compile Include="util\CSVFileHelper.cs" />
     <Compile Include="util\DateTimeHelper.cs" />

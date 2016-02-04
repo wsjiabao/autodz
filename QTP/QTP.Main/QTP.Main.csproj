@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="libgmnet, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\QTP.MDWrapper\GMLIB\libgmnet.dll</HintPath>
+      <HintPath>..\..\..\..\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\lib\win64\libgmnet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -93,6 +93,12 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QTP.Domain\QTP.Domain.csproj">
+      <Project>{30a8f72d-479f-4bbc-9379-2cb3649b9c57}</Project>
+      <Name>QTP.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

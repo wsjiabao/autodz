@@ -36,11 +36,14 @@ namespace MdTZ
 
         #endregion
 
+
+        #region 交易入口
+
         /// <summary>
         /// 发起买入处理
         /// </summary>
         /// <returns></returns>
-        public static int do_buy_process(List<GuoPiao> dpgps,List<GuoPiao> buygps)
+        public static int do_buy_process(List<GuoPiao> dpgps, List<GuoPiao> buygps)
         {
 
             if (isTraning)
@@ -48,42 +51,42 @@ namespace MdTZ
                 return 0;
             }
 
-            isTraning = true;         
+            isTraning = true;
             //double qsz = QuShi.qsz;                        
-           
+
             string real_code = "";
             string log_str = "";
-            int buyCnt = 0;        
-            int buyNums = 1;                   
+            int buyCnt = 0;
+            int buyNums = 1;
 
             //不在时间计划内
             if (StaUtil.getTranTimeNow(tranBuyTimes) <= 0)
             {
-                isTraning = false;  
+                isTraning = false;
                 return 0;
-            }  
-           
+            }
+
             foreach (GuoPiao gp in buygps)
             {
-                real_code = StaUtil.getTransCode(gp.code);                  
-                                                                  
+                real_code = StaUtil.getTransCode(gp.code);
+
                 //根据当前仓位获取股票数                
                 GPUtil.write("开始买入:" + real_code);
-                           
+
                 //发起交易
                 //THSAPI.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 1 * 100); 
-                ZXApi.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, buyNums * 100);  
-                //ZXApi.buyIn_cur(real_code, THSAPI.NUM_OPT_INPUT, buyNums * 100);  
+                //ZXApi.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, buyNums * 100);  
+                ZXApi.buyIn_cur(real_code, THSAPI.NUM_OPT_INPUT, buyNums * 100);
 
                 //更新交易数据                 
                 GPUtil.helper.ExecuteNonQuery("INSERT INTO gpsell (CODE,cbj,num,flag,buydate,DATE) values ('" + gp.code + "',"
                         + gp.dqj + "," + buyNums * 100 + ",0,'" + DateTime.Now + "','" + DateTime.Now + "')");
 
-                log_str = "结束买入[" + real_code + "] 数量:" + buyNums * 100 + " 价格:" + gp.dqj;               
+                log_str = "结束买入[" + real_code + "] 数量:" + buyNums * 100 + " 价格:" + gp.dqj;
                 GPUtil.write(log_str);
 
                 buyCnt++;
-                                                                                           
+
             }
 
             isTraning = false;
@@ -96,54 +99,61 @@ namespace MdTZ
         /// <param name="dpgps"></param>
         /// <param name="sellgps"></param>
         /// <returns></returns>
-        public static int do_sell_process(List<GuoPiao> dpgps,List<GuoPiao> sellgps)
+        public static int do_sell_process(List<GuoPiao> dpgps, List<GuoPiao> sellgps)
         {
             if (isTraning)
             {
                 return 0;
             }
 
-            isTraning = true;                                   
+            isTraning = true;
             int rtnSells = 0;
 
             /**
              * 卖出先决条件
-             **/                               
-            string real_code = "";              
-            string log_str = "";                       
+             **/
+            string real_code = "";
+            string log_str = "";
 
             //不在时间计划内
             if (StaUtil.getTranTimeNow(tranSellTimes) <= 0)
             {
-                isTraning = false;  
+                isTraning = false;
                 return 0;
             }
 
             foreach (GuoPiao gp in sellgps)
-                {
-                    real_code = StaUtil.getTransCode(gp.code);                                                            
-                    log_str = "开始卖出[" + gp.code + "]";                  
-                    GPUtil.write(log_str);                  
-                 
-                    //方法测试
-                    //THSAPI.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);  
-                    //ZXApi.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100,0); 
-                    ZXApi.sellOut_cur(real_code, THSAPI.NUM_OPT_INPUT, 100);         
+            {
+                real_code = StaUtil.getTransCode(gp.code);
+                log_str = "开始卖出[" + gp.code + "]";
+                GPUtil.write(log_str);
 
-                    //更新交易数据                 
-                    GPUtil.helper.ExecuteNonQuery("update gpsell set num = num-100 where code='" + gp.code + "' and num > 0");
+                //方法测试
+                //THSAPI.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);  
+                //ZXApi.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100,0); 
+                ZXApi.sellOut_cur(real_code, THSAPI.NUM_OPT_INPUT, 100);
 
-                    log_str = "结束卖出[" + real_code + "] 数量:" + 1 * 100;
-                    GPUtil.write(log_str);                  
+                //更新交易数据                 
+                GPUtil.helper.ExecuteNonQuery("update gpsell set num = num-100 where code='" + gp.code + "' and num > 0");
 
-                    rtnSells++;
-                  
-                }
+                log_str = "结束卖出[" + real_code + "] 数量:" + 1 * 100;
+                GPUtil.write(log_str);
 
-            isTraning = false;    
+                rtnSells++;
+
+            }
+
+            isTraning = false;
 
             return rtnSells;
         }
+
+        #endregion
+
+
+
+
+     
 
 
        

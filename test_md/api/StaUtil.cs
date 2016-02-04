@@ -151,9 +151,6 @@ namespace MdTZ
 
         }
 
-
-
-
         public static string tranPlan(string time)
         {
             string a = time.Replace(":", ".");
@@ -205,5 +202,8 @@ namespace MdTZ
             }
             return -1;
         }
+
+
+
     }
 }

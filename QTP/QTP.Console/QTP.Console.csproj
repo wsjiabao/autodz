@@ -33,8 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="libgmnet">
-      <HintPath>..\QTP.MDWrapper\GMLIB\libgmnet.dll</HintPath>
+      <HintPath>..\..\..\..\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\lib\win64\libgmnet.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />

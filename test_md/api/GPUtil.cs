@@ -72,6 +72,8 @@ namespace MdTZ
 
         public static void write(string msg)
         {
+
+            Console.WriteLine(msg);
             //当前程序目录
             string logPath = Path.GetDirectoryName(Application.ExecutablePath);
             //新建文件

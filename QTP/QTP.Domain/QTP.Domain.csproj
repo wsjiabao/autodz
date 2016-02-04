@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="libgmnet, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\QTP.MDWrapper\GMLIB\libgmnet.dll</HintPath>
+      <HintPath>..\..\..\..\guopiao\gmsdk_csharp_2.7.0_windows\gmsdk_csharp_2.7.0_windows\lib\win64\libgmnet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,9 +41,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TA-Lib-Core">
-      <HintPath>E:\量化交易\量化系统(QTP)开发文档资料\工具接口库\计算\指标\dotnet\src\Debug\TA-Lib-Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BridgeMonitor.cs" />
@@ -57,6 +54,10 @@
     <Compile Include="StrategyQTP.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QTP.DBAccess\QTP.DBAccess.csproj">
+      <Project>{6f6e25c8-86ac-4f64-9bd7-94bed5ed6e7c}</Project>
+      <Name>QTP.DBAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QTP.Infra\QTP.Infra.csproj">
       <Project>{b7976781-3a40-475a-a205-f996a78ec79d}</Project>
       <Name>QTP.Infra</Name>
@@ -65,6 +66,9 @@
       <Project>{2954cc30-e4e5-4ac6-9eee-ec0b82804979}</Project>
       <Name>QTP.TAlib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
