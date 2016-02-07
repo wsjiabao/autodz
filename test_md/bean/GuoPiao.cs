@@ -8,6 +8,7 @@ namespace MdTZ
      public class GuoPiao
     {
 
+        public GpTotal total { get; set; }
         public string code { get; set; }
         public string name { get; set; } //0：”大秦铁路”，股票名字；
         public double kpj { get; set; } //1：”27.55″，今日开盘价；
@@ -64,7 +65,7 @@ namespace MdTZ
 
         public double  tr { get; set; }
 
-       public double  real_zf { get; set; }//涨幅
+     
          
 
     }

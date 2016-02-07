@@ -156,21 +156,23 @@ namespace MdTZ
 
         /**
         * 
-        * 股票瞬时涨跌幅
+        * 股票成本价涨幅
         * */
-        public static double getRealGpZf(GuoPiao gp)
+        public static void setGpCostPriceZf(GuoPiao gp)
         {
             if (GPTotalAPI.gpMap.ContainsKey(gp.code))
             {
-                GpTotal old_gp = GPTotalAPI.gpMap[gp.code];
-                if (old_gp != null)
+                GpTotal total = GPTotalAPI.gpMap[gp.code];
+                if (total != null)
                 {
-                    return Math.Round(((gp.dqj - old_gp.dqj) / old_gp.dqj) * 100, 2);
+                    total.dqj = gp.dqj;
+                    total.buyzf =  Math.Round(((gp.dqj - total.costPrice) / total.costPrice) * 100, 3);
+                    gp.total = total;
                 }
-            }
-
-            return 0;
+            }           
+           
         }
+
 
     }
 }

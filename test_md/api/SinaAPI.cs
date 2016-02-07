@@ -309,11 +309,11 @@ namespace MdTZ
                     gp.zf = Math.Round(((gp.dqj - gp.zrspj) / gp.zrspj) * 100,2); //涨幅
                 }
 
-                double real_zf = GPUtil.getRealGpZf(gp);
-                gp.real_zf = real_zf;
+               //统计信息
+               GPUtil.setGpCostPriceZf(gp);                  
 
                 //tr 计算
-                if (((gp.jrzgj - gp.jrzdj) - Math.Abs(gp.zrspj - gp.jrzgj) > 0) 
+                if (((gp.jrzgj - gp.jrzdj) > Math.Abs(gp.zrspj - gp.jrzgj)) 
                     )
                 {
                     if ((gp.jrzgj - gp.jrzdj) > Math.Abs(gp.zrspj - gp.jrzdj))

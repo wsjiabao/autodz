@@ -11,25 +11,25 @@ namespace MdTZ
     class TranApi
     {
 
-        #region 初始化对象
+        #region 成员变量
         public static bool isTraning = false;
      
         public static List<string> buyCodes = new List<string>();     
         public static List<string> sellCodes = new List<string>();
 
         public static string tickCodes = "sh000001,sz399001,sz399006,";
-        public static string tickSqlCodes = "'sh000001','sz399001','sz399006',";
+        public static string tickSqlCodes = "'sh000001','sz399001','sz399006'";
 
         public static List<GpTranBean> buyedCodes = new List<GpTranBean>();
         public static List<GpTranBean> selledCodes = new List<GpTranBean>();
 
         //交易时间-交易次数
         public static Dictionary<string, int> tranBuyTimes = new Dictionary<string, int>{
-             {"9.35-9.50",1},{"14.30-14.50",1},{"19.00-23.30",1}
+             {"9.01-9.31",1},{"9.35-9.51",1},{"14.21-14.51",1},{"19.01-23.31",1}
         };
 
         public static Dictionary<string, int> tranSellTimes = new Dictionary<string, int>{
-             {"9.40-9.50",1},{"13.30-13.50",1},{"19.00-23.30",1}
+              {"9.01-9.31",1},{"9.41-9.51",1},{"13.31-13.51",1},{"19.01-23.31",1}
         };
 
         //public static Dictionary<string, int> tranTimes = new Dictionary<string, int>();
@@ -52,7 +52,8 @@ namespace MdTZ
             }
 
             isTraning = true;
-            //double qsz = QuShi.qsz;                        
+            //大盘
+            GuoPiao dp = dpgps[0];
 
             string real_code = "";
             string log_str = "";
@@ -75,12 +76,15 @@ namespace MdTZ
 
                 //发起交易
                 //THSAPI.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, 1 * 100); 
-                //ZXApi.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, buyNums * 100);  
-                ZXApi.buyIn_cur(real_code, THSAPI.NUM_OPT_INPUT, buyNums * 100);
+                ZXApi.buyIn(real_code, THSAPI.PRICE_OPT_SELL_2, 0, THSAPI.NUM_OPT_INPUT, buyNums * 100);  
+                //ZXApi.buyIn_cur(real_code, THSAPI.NUM_OPT_INPUT, buyNums * 100);
+
+                //买入更新
+                GPUtil.helper.ExecuteNonQuery("update gpbuy set price=" + gp.dqj + ",dp=" + dp.dqj + " where code='" + gp.code+"'");
 
                 //更新交易数据                 
-                GPUtil.helper.ExecuteNonQuery("INSERT INTO gpsell (CODE,cbj,num,flag,buydate,DATE) values ('" + gp.code + "',"
-                        + gp.dqj + "," + buyNums * 100 + ",0,'" + DateTime.Now + "','" + DateTime.Now + "')");
+                GPUtil.helper.ExecuteNonQuery("INSERT INTO gpsell (CODE,cbj,num,dp,flag,buydate,DATE) values ('" + gp.code + "',"
+                        + gp.dqj + "," + buyNums * 100 + "," + dp.dqj + ",0,'" + DateTime.Now + "','" + DateTime.Now + "')");
 
                 log_str = "结束买入[" + real_code + "] 数量:" + buyNums * 100 + " 价格:" + gp.dqj;
                 GPUtil.write(log_str);
@@ -130,8 +134,8 @@ namespace MdTZ
 
                 //方法测试
                 //THSAPI.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100);  
-                //ZXApi.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100,0); 
-                ZXApi.sellOut_cur(real_code, THSAPI.NUM_OPT_INPUT, 100);
+                ZXApi.sellOut(real_code, THSAPI.PRICE_OPT_BUY_2, 0, THSAPI.NUM_OPT_INPUT, 100,0); 
+                //ZXApi.sellOut_cur(real_code, THSAPI.NUM_OPT_INPUT, 100);
 
                 //更新交易数据                 
                 GPUtil.helper.ExecuteNonQuery("update gpsell set num = num-100 where code='" + gp.code + "' and num > 0");

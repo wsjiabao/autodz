@@ -44,6 +44,11 @@ namespace MdTZ
             }
         }
 
+
+        /// <summary>
+        /// 分时价格成交占比图
+        /// </summary>
+        /// <param name="codes"></param>
         public static void gpJgZbTotal(string codes)
         {
             //清空表                   
@@ -57,6 +62,11 @@ namespace MdTZ
     
         }
 
+
+        /// <summary>
+        /// 分时波段统计
+        /// </summary>
+        /// <param name="codes"></param>
         public static void bdTimeTotal(string codes)
         {
             //清空表                   
@@ -70,6 +80,10 @@ namespace MdTZ
 
         }
 
+        /// <summary>
+        /// 分时均线统计
+        /// </summary>
+        /// <param name="codes"></param>
         public static void jxTimeTotal(string codes)
         {
             //清空表                   

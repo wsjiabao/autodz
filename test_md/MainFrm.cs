@@ -556,8 +556,8 @@ namespace MdTZ
             //交易事件触发
             if (GPUtil.isTranTime() && !TranApi.isTraning)
             {
-                EventHandler<EventArgs> tranEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_SELL_TRANS];
-                tranEvent.BeginInvoke(tran_gps, EventArgs.Empty, null, null);
+                //EventHandler<EventArgs> tranEvent = (EventHandler<EventArgs>)gpDelegates[GPConstants.EVENT_SELL_TRANS];
+                //tranEvent.BeginInvoke(tran_gps, EventArgs.Empty, null, null);
 
             }
             output("###结束交易##");   

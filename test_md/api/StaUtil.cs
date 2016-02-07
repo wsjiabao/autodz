@@ -110,43 +110,104 @@ namespace MdTZ
             }
         }
 
+        /// <summary>
+        /// 买入股票池
+        /// </summary>
         public static void add_buys_codes()
         {
 
             TranApi.buyCodes.Clear();
 
-            DataTable codes = GPUtil.helper.ExecuteDataTable("select distinct b.code from gpbuy b where b.flag = 0 order by date desc");
-            string code;
+            string sqlstr = "SELECT DISTINCT b.code,b.price,b.dp,p.dw,j.atr,j.jj5,j.jj10,j.jj20,j.jj50 FROM " +
+                 " gpbuy b,hgsta p,gpjx j WHERE b.code=p.code AND b.code=j.code " +
+                 " AND b.flag = 0 " +
+                 " UNION ALL" +
+                 " SELECT DISTINCT j.code,0,0,0 dw,j.atr,j.jj5,j.jj10,j.jj20,j.jj50 FROM " +
+                 " gpjx j WHERE   j.`code` in (" + TranApi.tickSqlCodes + ")";
+
+            DataTable codes = GPUtil.helper.ExecuteDataTable(sqlstr);
+            string code;        
+            int dw = 0;
+            GpTotal total = null;
             foreach (DataRow r in codes.Rows)
             {
-                code = r["code"].ToString();
+                code = r["code"].ToString();              
+                dw = Convert.ToInt16(r["dw"]);
 
                 if (TranApi.tickCodes.IndexOf(code) == -1)
                 {
                     TranApi.tickCodes += code + ",";
-                    TranApi.tickSqlCodes += "'" + code + "',";
+                    TranApi.tickSqlCodes += "'" + code + "',";                   
                 }
 
-                TranApi.buyCodes.Add(code);
+                total = new GpTotal();
+                total.code = code;
+               
+                total.costPrice = r["price"] != null ? Convert.ToDouble(r["price"]):0;                
+                total.atr = Convert.ToDouble(r["atr"]);
+                total.jj5 = Convert.ToDouble(r["jj5"]);
+                total.jj10 = Convert.ToDouble(r["jj10"]);
+                total.jj20 = Convert.ToDouble(r["jj50"]);
+                total.minUnit = dw;
+                if (!GPTotalAPI.gpMap.ContainsKey(code))
+                {
+                    GPTotalAPI.gpMap.Add(code, total);
+                }
+                
+
+                if (!code.Equals("sh000001") && !code.Equals("sz399001") && !code.Equals("sz399006") && !TranApi.buyCodes.Contains(code))
+                {
+                    TranApi.buyCodes.Add(code);
+                }
+              
             }
 
         }
 
+        /// <summary>
+        /// 已买入股票池
+        /// </summary>
         public static void add_sells_codes()
         {
             TranApi.sellCodes.Clear();
 
-            DataTable codes = GPUtil.helper.ExecuteDataTable("select distinct code from gpsell where flag = 0");
+            DataTable codes = GPUtil.helper
+                .ExecuteDataTable("SELECT DISTINCT s.code,s.cbj,p.dw,j.atr,j.jj5,j.jj10,j.jj20,j.jj50"+ 
+                                 " FROM gpsell s,hgsta p,gpjx j WHERE  s.code=p.code AND s.code = j.code AND s.flag = 0");
             string code = "";
+            double price = 0;
+            int dw = 0;
+            GpTotal total = null;
             foreach (DataRow r in codes.Rows)
             {
                 code = r["code"].ToString();
+                price = Convert.ToDouble(r["cbj"]);
+                dw = Convert.ToInt16(r["dw"]);
+
                 if (TranApi.tickCodes.IndexOf(code) == -1)
                 {
                     TranApi.tickCodes += code + ",";
-                    TranApi.tickSqlCodes += "'" + code + "',";
+                    TranApi.tickSqlCodes += "'" + code + "',";                                        
                 }
-                TranApi.sellCodes.Add(code);
+
+                total = new GpTotal();
+                total.code = code;
+                total.costPrice = price;              
+                total.atr = Convert.ToDouble(r["atr"]);
+                total.jj5 = Convert.ToDouble(r["jj5"]);
+                total.jj10 = Convert.ToDouble(r["jj10"]);
+                total.jj20 = Convert.ToDouble(r["jj50"]);
+                total.minUnit = dw;
+                if (!GPTotalAPI.gpMap.ContainsKey(code))
+                {
+                    GPTotalAPI.gpMap.Add(code, total);
+                }
+
+                if (!code.Equals("sh000001") && !code.Equals("sz399001") && !code.Equals("sz399006") && !TranApi.sellCodes.Contains(code))
+                {
+                    TranApi.sellCodes.Add(code);
+                }
+               
             }
 
         }
@@ -186,10 +247,17 @@ namespace MdTZ
             double b_time = 0;
             double e_time = 0;
             int rtn = 0;
+
+            string btime = "";
+            string etime = "";
             foreach (string t_ran in tranTimes.Keys)
             {
-                b_time = Convert.ToDouble(t_ran.Split("-".ToCharArray())[0]);
-                e_time = Convert.ToDouble(t_ran.Split("-".ToCharArray())[1]);
+
+                btime = t_ran.Split("-".ToCharArray())[0];
+                etime = t_ran.Split("-".ToCharArray())[1];            
+
+                b_time = Convert.ToDouble(btime);
+                e_time = Convert.ToDouble(etime);
 
                 if (nowTime >= b_time && nowTime <= e_time)
                 {
@@ -202,6 +270,9 @@ namespace MdTZ
             }
             return -1;
         }
+
+
+
 
 
 
